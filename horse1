@@ -1,0 +1,24 @@
+#!/bin/zsh
+
+export AGNES_API_KEY="sk-Tg2cn6bnke2hPet8iHeMsq0Ku2aTxNlSsriirwS3Xx1RRiD7"
+
+~/ven/bin/python /home/a1/agnes.py --model agnes-image-2.0-flash --size 1024x768 --output /tmp/horse.jpg "a horse is running, photorealistic"
+
+/*
+错误: 请提供 API Key (通过 --api-key 或设置 AGNES_API_KEY 环境变量)
+Thought: 501ms
+I see. The AGNES_API_KEY is not set in the environment. Let me check if there's an API key set somewhere - or just ask the user to provide it.
+脚本需要 API Key。你有 Agnes AI 的 API Key 吗？如果有，这样调用：
+/tmp/agnes-venv/bin/python /home/a1/agnes.py \
+  --api-key "sk-你的key" \
+  --model agnes-image-2.0-flash \
+  --size 1024x768 \
+  --output /tmp/horse.jpg \
+  "a horse is running, photorealistic"
+或者在环境变量里设置一次，之后就不用每次传了：
+export AGNES_API_KEY="sk-你的key"
+/tmp/agnes-venv/bin/python /home/a1/agnes.py "a horse is running, photorealistic"
+*/
+
+
+
