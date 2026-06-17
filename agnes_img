@@ -1,0 +1,30 @@
+#!/bin/zsh
+
+#export AGNES_API_KEY="sk-Tg2cn6bnke2hPet8iHeMsq0Ku2aTxNlSsriirwS3Xx1RRiD7"
+
+
+~/ven/bin/python /home/a1/agnes_img2img.py --model agnes-image-2.1-flash --image "/tmp/result1.jpg" --output /tmp/result2.jpg --prompt "把马变成红棕色"
+
+
+/*
+The user wants me to provide example commands for using agnes_img2img.py. Let me give a few examples covering different use cases.
+# 1. 本地图片 + prompt 修改
+/tmp/agnes-venv/bin/python /home/a1/agnes_img2img.py \
+  --image /tmp/horse.jpg \
+  --prompt "把背景改成星空，马变成白色" \
+  --output /tmp/horse_edited.jpg
+
+# 2. 公网 URL 图片 + prompt
+/tmp/agnes-venv/bin/python /home/a1/agnes_img2img.py \
+  --image "https://example.com/photo.jpg" \
+  --prompt "改成水彩画风格" \
+  --output /tmp/watercolor.jpg
+
+# 3. 指定尺寸和模型
+/tmp/agnes-venv/bin/python /home/a1/agnes_img2img.py \
+  --image input.png \
+  --prompt "把物体变成红色，保留原构图" \
+  --model agnes-image-2.0-flash \
+  --size 768x1024 \
+  --output output.jpg
+*/
