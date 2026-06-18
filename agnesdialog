@@ -1,0 +1,61 @@
+Done.
+# 直接传 prompt
+python3 /home/a1/agnes_diag.py "你好，请介绍一下你自己"
+
+# 通过 stdin
+echo "写一首关于秋天的诗" | python3 /home/a1/agnes_diag.py
+
+# 带 system prompt
+python3 /home/a1/agnes_diag.py --system "你是一个诗人" "写一首短诗"
+
+# 流式输出
+python3 /home/a1/agnes_diag.py --stream "讲个故事"
+▣  Build · DeepSeek V4 Flash Free · 3m 9s
+怎么调用，给几个例子吧
+Thought: 1.7s
+The user is asking how to call the script. I just gave examples in my last message, but maybe they want to see actual output. Let me run the script to show them a real example with the API key if it's available. Actually, the API key might not be set. Let me just wait for their response or they might need to set the key first.
+
+Wait, I already gave examples. They're asking again. Maybe they didn't see it or want different/better examples. Let me just reiterate the examples clearly since they might have missed my previous message which contained the same info.
+# 1. 最简单的方式，直接传 prompt
+python3 /home/a1/agnes_diag.py "你是谁"
+
+# 2. 带系统提示词
+python3 /home/a1/agnes_diag.py --system "你是莎士比亚风格" "写一首关于夏天的诗"
+
+# 3. 流式输出（一个字一个字显示）
+python3 /home/a1/agnes_diag.py --stream "给我讲个笑话"
+
+# 4. 从标准输入读取 prompt
+echo "1+1等于几" | python3 /home/a1/agnes_diag.py
+
+# 5. 指定其他模型
+python3 /home/a1/agnes_diag.py --model agnes-1.5-flash "你好"
+前需要先设置 API Key：export AGNES_API_KEY="sk-你的key"
+
+============================================================================
+#1. 单轮文字对话（和之前一样）
+python3 /home/a1/agnes_diag.py "你好"
+
+# 2. 单轮图片理解
+python3 /home/a1/agnes_diag.py --image /tmp/horse.jpg "描述这张图片的内容"
+
+# 3. 单轮多张图片
+python3 /home/a1/agnes_diag.py --image /tmp/horse.jpg --image /tmp/horse_edited.jpg "比较这两张图片"
+
+# 4. 图片 URL
+python3 /home/a1/agnes_diag.py --image "https://example.com/photo.jpg" "这是什么？"
+
+# 5. 多轮对话模式（交互式）
+python3 /home/a1/agnes_diag.py --chat
+
+# 6. 多轮对话模式，带初始消息和图片
+python3 /home/a1/agnes_diag.py --chat --image /tmp/horse.jpg "介绍一下这张图片"
+
+# 7. 多轮对话中随时添加图片（输入 /image 命令）
+# >>> /image /tmp/photo.jpg
+多轮模式下的命令：
+- 直接输入文字发送消息
+- /image <路径> 添加图片到下一条消息
+- /exit 退出
+
+
