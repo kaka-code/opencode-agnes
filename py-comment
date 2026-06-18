@@ -1,0 +1,147 @@
+在 Bash 中通过 Python 打印彩色字体（ANSI 转义序列），主要有以下几种常用方法：
+
+### 方法一：使用 `print` 函数配合 ANSI 转义码（最通用）
+
+Python 的 `print` 函数默认支持 ANSI 颜色代码。你只需要在字符串前后加上特定的转义序列即可。
+
+**格式：** `\033[显示方式;前景色;背景色m` + 内容 + `\033[0m`
+
+*   `\033[0m`：重置所有属性（必须加在最后，否则后续输出也会变色）。
+
+#### 常用颜色代码：
+| 前景色 | 代码 | 背景色 | 代码 |
+| :--- | :--- | :--- | :--- |
+| 黑色 | 30 | 黑色 | 40 |
+| 红色 | 31 | 红色 | 41 |
+| 绿色 | 32 | 绿色 | 42 |
+| 黄色 | 33 | 黄色 | 43 |
+| 蓝色 | 34 | 蓝色 | 44 |
+| 紫色 | 35 | 紫色 | 45 |
+| 青色 | 36 | 青色 | 46 |
+| 白色 | 37 | 白色 | 47 |
+
+#### 示例脚本 (`color_test.py`)：
+
+```python
+import sys
+
+def print_colored(text, color_code):
+    # 31 是红色，40 是黑色背景，1 是加粗
+    reset = "\033[0m"
+    print(f"\033[{color_code}m{text}{reset}")
+
+if __name__ == "__main__":
+    # 红色文字
+    print_colored("这是一段红色的文字", "31")
+    
+    # 绿色背景 + 白色文字 + 加粗
+    print_colored("这是一段绿底白字加粗的文字", "1;37;42")
+    
+    # 蓝色闪烁文字 (注意：某些终端不支持闪烁)
+    print_colored("蓝色闪烁", "34;5")
+    
+    # 直接在 bash 调用
+    print("\033[32m直接打印绿色\033[0m")
+```
+
+**在 Bash 中运行：**
+```bash
+python3 color_test.py
+```
+
+---
+
+### 方法二：使用第三方库 `colorama`（推荐，跨平台兼容性好）
+
+ANSI 代码在 Windows 上可能不支持。`colorama` 可以自动处理跨平台问题，并在 Windows 上也能正常工作。
+
+1.  **安装：**
+    ```bash
+    pip install colorama
+    ```
+
+2.  **示例脚本 (`colorama_test.py`)：**
+
+    ```python
+    from colorama import init, Fore, Back, Style
+
+    # 初始化 colorama（在 Windows 上需要，Linux/Mac 可省略但建议保留）
+    init(autoreset=True)
+
+    print(Fore.RED + "这是一段红色的文字")
+    print(Back.GREEN + Fore.BLACK + "绿底黑字")
+    print(Style.BRIGHT + "加粗的文字")
+    
+    # 混合使用
+    print(Fore.CYAN + "青色文字" + Back.YELLOW + "黄色背景")
+    ```
+
+**在 Bash 中运行：**
+```bash
+python3 colorama_test.py
+```
+
+---
+
+### 方法三：在 Bash 中直接调用 Python 一行命令
+
+如果你不想创建文件，可以直接在 Bash 命令行中使用 `-c` 参数执行 Python 代码：
+
+```bash
+# 打印红色文字
+python3 -c 'print("\033[31m红色文字\033[0m")'
+
+# 打印绿色加粗文字
+python3 -c 'print("\033[1;32m绿色加粗\033[0m")'
+```
+
+---
+
+### 方法四：使用 `rich` 库（现代、美观）
+
+`rich` 是一个强大的库，支持更丰富的格式化输出（表格、进度条、语法高亮等）。
+
+1.  **安装：**
+    ```bash
+    pip install rich
+    ```
+
+2.  **示例脚本 (`rich_test.py`)：**
+
+    ```python
+    from rich.console import Console
+    from rich.text import Text
+
+    console = Console()
+    
+    # 简单方式
+    console.print("[red]红色文字[/red]")
+    console.print("[bold green]绿色加粗文字[/bold green]")
+    console.print("[blue on yellow]蓝底黄字[/blue on yellow]")
+    
+    # 更复杂的方式
+    text = Text("混合样式", style="bold")
+    text.append(" 红色部分", style="red")
+    text.append(" 绿色部分", style="green")
+    console.print(text)
+    ```
+
+**在 Bash 中运行：**
+```bash
+python3 rich_test.py
+```
+
+---
+
+### 总结建议
+
+| 场景 | 推荐方法 |
+| :--- | :--- |
+| **简单快速测试** | 方法一（ANSI 转义码）或 方法三（Bash 内联） |
+| **生产环境/跨平台** | 方法二（`colorama`） |
+| **需要丰富格式（表格、日志等）** | 方法四（`rich`） |
+
+> **注意**：确保你的终端支持 ANSI 颜色代码。大多数现代 Linux/macOS 终端和 Windows Terminal 都支持。旧的 Windows CMD 可能需要额外配置或使用 `colorama`。
+>
+>
+>
